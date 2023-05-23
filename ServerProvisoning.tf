@@ -15,7 +15,7 @@ variable "secret_key" {
 }
 
 provider "aws" {
-  region = "ap-south-1"
+  region = "ap-northeast-1"
 }
 
 # Create VPC
@@ -35,7 +35,7 @@ resource "aws_subnet" "dev_public_subnet" {
   vpc_id                  = aws_vpc.dev_vpc.id
   cidr_block              = "10.0.0.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = "ap-south-1a"
+  availability_zone       = "ap-northeast-1c"
 
   tags = {
     Name = "dev_public_subnet"
@@ -104,11 +104,11 @@ resource "aws_security_group" "dev_sg" {
 locals {
   instance_config = {
     "test-server" = {
-      ami       = "ami-02eb7a4783e7e9317"
+      ami       = "ami-0d52744d6551d851e"
       private_ip = "10.0.0.50"
     }
     "prod-server" = {
-      ami       = "ami-02eb7a4783e7e9317"
+      ami       = "ami-0d52744d6551d851e"
       private_ip = "10.0.0.51"
     }
   }
@@ -119,7 +119,7 @@ resource "aws_instance" "web_server" {
   for_each = local.instance_config
   ami           = each.value.ami
   instance_type = "t2.micro"
-  key_name      = "web-server"
+  key_name      = "DevKey"
   private_ip    = each.value.private_ip
 
   subnet_id                   = aws_subnet.dev_public_subnet.id
