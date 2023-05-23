@@ -1,1 +1,18 @@
+---
+- hosts: prod-server
+  become: true
+  tasks:
+  - name: update apt
+    command: sudo apt-get update
 
+  - name: install docker
+    command: sudo apt install -y docker.io
+
+  - name: start docker service
+    command: sudo systemctl start docker
+  
+  - name: stop and remove existing insurance container
+    command: sudo docker rm -f insurance 
+    
+  - name: deploy insureme application
+    command: sudo docker run -itd -p 8081:8081 --name insurance vidyadhare/insurance:1.0
