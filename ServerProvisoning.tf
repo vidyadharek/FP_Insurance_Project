@@ -7,6 +7,13 @@ terraform {
   }
 }
 
+variable "access_key" {
+    default = ""
+}
+variable "secret_key" {
+    default = ""
+}
+
 provider "aws" {
   region = "ap-south-1"
 }
